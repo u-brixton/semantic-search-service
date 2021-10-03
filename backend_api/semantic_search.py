@@ -23,7 +23,7 @@ def save_faiss_index(index_path):
 
 
 def retrieve_similar_phrases(
-    query_phrase, faiss_index, text_dataset, model, top_n=20, text_column="text"
+    query_phrase, faiss_index, text_dataset, model, top_n=20, text_column="line"
 ):
     query_emb = np.expand_dims(model.encode(query_phrase), 0)
     _, ids = faiss_index.search(x=query_emb, k=top_n)

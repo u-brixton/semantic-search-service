@@ -1,3 +1,4 @@
+import asyncio
 import json
 from pathlib import Path
 from typing import List, Literal, Optional
@@ -36,42 +37,38 @@ app = FastAPI(
 class Input(BaseModel):
     query_phrase: str
     top_n: Optional[int] = 20
-    dataset_name: str  # Literal[tuple(allowed_datasets_list)]
+    dataset_name: Literal[tuple(allowed_datasets_list)] = allowed_datasets_list[0]
 
 
-# class Output(BaseModel):
-#     query_phrase: str
-#     top_n: int
-#     dataset_name:
-#     result: List[str]
+class Output(BaseModel):
+    query_phrase: str
+    top_n: int
+    dataset_name: Literal[tuple(allowed_datasets_list)]
+    result: List[str]
 
 
 @app.get("/")
-def home():
+async def home():
     return {
         "message": "Visit the endpoint: /api/v1/get_similar_phrases to perform OCR. Visit the endpoint /docs for documentation"
     }
 
 
 # TODO: add method to get all possible sources
-# TODO: add async to functions
 
 
 @app.post("/api/v1/get_similar_phrases/")
-def get_similar_phrases(input: Input):  # , response_model=Output):
+async def get_similar_phrases(input: Input, response_model: Output):
     similar_phrases = retrieve_similar_phrases(
         input.query_phrase,
         faiss_indices[input.dataset_name],
         text_datasets[input.dataset_name],
         model,
         top_n=input.top_n,
+        text_column="line",
     )
 
-    output = dict()
-    # REFACTOR ME
-    output["query_phrase"] = input.query_phrase
-    output["top_n"] = input.top_n
-    output["use_dataset"] = input.use_dataset
+    output = input.dict()
     output["result"] = similar_phrases
 
     return output
