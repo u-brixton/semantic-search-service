@@ -1,0 +1,9 @@
+torch==1.9.0
+transformers==4.11.2
+fastapi==0.68.1
+sentence-transformers==2.1.0
+pydantic==1.8.2
+pandas==1.1.5
+numpy==1.19.5
+faiss-cpu==1.7.1.post2
+uvicorn==0.15.0
