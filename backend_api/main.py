@@ -1,7 +1,7 @@
 import asyncio
 import json
 from pathlib import Path
-from typing import List, Literal, Optional
+from typing import List, Dict, Literal, Optional
 
 import pandas as pd
 from fastapi import FastAPI
@@ -53,15 +53,15 @@ async def home():
 
 
 @app.post("/api/v1/get_available_datasets/")
-async def get_similar_phrases() -> List[str]:
+async def get_available_datasets() -> Dict[str, List[str]]:
     """
     Return a list of datasets name, which we can use to find similar phrases
     """
-    return allowed_datasets_list
+    return {"allowed_datasets": allowed_datasets_list}
 
 
 @app.post("/api/v1/get_similar_phrases/")
-async def get_similar_phrases(input: Input, response_model: Output):
+async def get_similar_phrases(input: Input) -> Output:
     """
     Returns a list of similar phrases given an input phrase, faiss index, model and texts for faiss model
     """
