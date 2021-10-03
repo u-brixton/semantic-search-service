@@ -25,8 +25,6 @@ for source_name in data_config["datasets"]:
         data_config["datasets"][source_name]["text_path"]
     )
 
-# TODO: add assert to check indices
-
 app = FastAPI(
     title="Semantic search service",
     description="Retrieve phrases similar to a query",
@@ -54,11 +52,19 @@ async def home():
     }
 
 
-# TODO: add method to get all possible sources
+@app.post("/api/v1/get_available_datasets/")
+async def get_similar_phrases() -> List[str]:
+    """
+    Return a list of datasets name, which we can use to find similar phrases
+    """
+    return allowed_datasets_list
 
 
 @app.post("/api/v1/get_similar_phrases/")
 async def get_similar_phrases(input: Input, response_model: Output):
+    """
+    Returns a list of similar phrases given an input phrase, faiss index, model and texts for faiss model
+    """
     similar_phrases = retrieve_similar_phrases(
         input.query_phrase,
         faiss_indices[input.dataset_name],
