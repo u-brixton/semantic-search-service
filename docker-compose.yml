@@ -6,6 +6,8 @@ services:
     ports:
       - 8000:8000
     container_name: backend_api
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://backend_api:8000/"]
 
   frontend:
     build: frontend
@@ -14,3 +16,4 @@ services:
     ports:
       - 8501:8501
     container_name: frontend
+    restart: on-failure

@@ -75,6 +75,6 @@ async def get_similar_phrases(input: Input) -> Output:
     )
 
     output = input.dict()
-    output["result"] = similar_phrases
+    output["similar_phrases"] = similar_phrases
 
     return output

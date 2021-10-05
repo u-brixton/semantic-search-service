@@ -55,5 +55,5 @@ def retrieve_similar_phrases(
     """
     query_emb = np.expand_dims(model.encode(query_phrase), 0)
     _, ids = faiss_index.search(x=query_emb, k=top_n)
-    result = text_dataset.iloc[ids[0], :][text_column].tolist()
-    return result
+    similar_phrases = text_dataset.iloc[ids[0], :][text_column].tolist()
+    return similar_phrases

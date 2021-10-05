@@ -1,10 +1,9 @@
-import streamlit as st
+import pandas as pd
 import requests
-
+import streamlit as st
 
 BACKEND_ADDRESS = "http://backend_api"
 BACKEND_PORT = 8000
-
 
 st.sidebar.markdown("**Inputs**")
 allowed_datasets = requests.post(
@@ -35,6 +34,5 @@ if st.sidebar.button("Retrieve similar phrases from a dataset"):
         f"{BACKEND_ADDRESS}:{BACKEND_PORT}/api/v1/get_similar_phrases/",
         json=post_params,
     ).json()
-    print(res.keys())
-    for text in res["result"]:
-        st.write(f"""**{text}**""")
+
+    st.table(pd.DataFrame(res["similar_phrases"], columns=["similar_phrases"]))
