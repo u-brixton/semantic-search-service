@@ -48,3 +48,5 @@ To run in cloud you can use:
 - AWS Elastic Beanstalk with Docker Amazon Linux 2 Platform (but to allocate enough resources): https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker-multicontainer-migration.html
 - Heroku DockHero
 
+## Screenshots
+![Screenshot for a demo](demo_screenshot.png?raw=true)
