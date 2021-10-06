@@ -16,13 +16,18 @@ def get_embedder(model_path: Union[Path, str]) -> SentenceTransformer:
     return SentenceTransformer(str(model_path))
 
 
-def load_faiss_index(index_path: Union[Path, str]):
+def load_faiss_index(
+    index_path: Union[Path, str],
+    nprobe: Union[int, None] = None,
+):
     """
     Loads faiss index into memory
     :param index_path: path to serialized faiss weights
     """
     with open(index_path, "rb") as fin:
         index = faiss.deserialize_index(pickle.load(fin))
+    if nprobe is not None:
+        index.nprobe = nprobe
     return index
 
 
