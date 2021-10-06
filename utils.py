@@ -112,6 +112,7 @@ def calculate_and_save_faiss_index(
 
     return cpu_index
 
+
 def prepare_artifacts(
     dfs: Dict[str, pd.DataFrame],
     save_path: Union[str, Path],
