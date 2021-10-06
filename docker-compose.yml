@@ -1,18 +1,32 @@
 version: "2"
 
 services:
-  backend_api:
+  backend-api:
+    image: ubrixton/semantic-search-backend
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: "8gb"
+        reservations:
+          cpus: "4"
+          memory: "8gb"
     build: backend_api
     ports:
       - 8000:8000
-    container_name: backend_api
+    container_name: backend-api
     healthcheck:
       test: ["CMD", "curl", "-f", "http://backend_api:8000/"]
-
   frontend:
+    image: ubrixton/semantic-search-frontend
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: "2gb"
     build: frontend
     depends_on:
-      - backend_api
+      - backend-api
     ports:
       - 8501:8501
     container_name: frontend

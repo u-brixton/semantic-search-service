@@ -1,4 +1,5 @@
 FROM python:3.8-slim
+ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update && apt-get install -y wget
 
@@ -14,10 +15,10 @@ COPY requirements.txt /frontend
 
 WORKDIR /frontend
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /frontend
 
 EXPOSE 8501
 
-CMD dockerize -wait http://backend_api:8000/ -timeout 10s streamlit run main.py
+CMD dockerize -wait http://backend-api:8000/ -timeout 10s streamlit run main.py

@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 import streamlit as st
 
-BACKEND_ADDRESS = "http://backend_api"
+BACKEND_ADDRESS = "http://backend-api"
 BACKEND_PORT = 8000
 
 st.sidebar.markdown("**Inputs**")
