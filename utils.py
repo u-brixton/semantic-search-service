@@ -58,9 +58,10 @@ def preproc_df(
     pattern = re.compile(r"\(.*\)")
     if remove_curly_brackets:
         df[text_col] = df[text_col].apply(lambda x: pattern.sub("", x))
-        df = df.drop_duplicates(text_col)
+        df[text_col] = df[text_col].str.strip()
         df = df[df[text_col] != ""]
         df["length"] = df[text_col].apply(len)
+        df = df.drop_duplicates(text_col)
 
     df = df[df[length_col] >= min_length]
     df = df[df[length_col] <= max_length]
